@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>福岡美食導航</title>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+<title>福岡多彩之旅</title>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root {
-    --bg-color: #f0f2f5;
+    --bg-color: #f4f6f8;
     --text-main: #2d3436;
     --text-light: #636e72;
-    --shadow: 0 8px 30px rgba(0,0,0,0.08);
+    --shadow: 0 8px 30px rgba(0,0,0,0.06);
     
     /* Day Colors */
-    --c-d1: #FF6B6B; /* Day 1: Coral */
-    --c-d2: #4ECDC4; /* Day 2: Teal */
-    --c-d3: #45B7D1; /* Day 3: Sky */
-    --c-d4: #FF9F43; /* Day 4: Orange */
-    --c-d5: #A55EEA; /* Day 5: Purple */
-    --c-hotel: #20bf6b; /* Hotel: Green */
+    --c-d1: #FF6B6B; 
+    --c-d2: #4ECDC4; 
+    --c-d3: #45B7D1; 
+    --c-d4: #FF9F43; 
+    --c-d5: #A55EEA; 
+    --c-hotel: #20bf6b;
   }
 
   body {
@@ -34,50 +34,43 @@
 
   /* Header */
   .header {
-    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-    padding: 35px 20px 25px;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    box-shadow: var(--shadow);
+    background: white;
+    padding: 20px;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     text-align: center;
   }
   
-  .header h1 { margin: 0; color: #2d3436; font-size: 1.5rem; letter-spacing: 1px; }
-  .header p { color: #555; margin: 5px 0 0; font-size: 0.9rem; }
+  .header h1 { margin: 0; font-size: 1.2rem; color: #2d3436; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
   /* Navigation */
   .nav-scroll {
     display: flex;
     overflow-x: auto;
-    padding: 15px 10px;
-    gap: 12px;
+    padding: 10px 15px;
+    gap: 10px;
     scrollbar-width: none;
-    position: sticky;
-    top: 90px;
-    background: rgba(240, 242, 245, 0.95);
-    z-index: 90;
-    backdrop-filter: blur(8px);
+    background: white;
+    border-bottom: 1px solid #eee;
   }
   .nav-scroll::-webkit-scrollbar { display: none; }
 
   .tab-btn {
     flex: 0 0 auto;
-    padding: 10px 18px;
-    border-radius: 25px;
-    border: none;
-    background: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    background: #f9f9f9;
     color: var(--text-light);
     font-weight: bold;
     font-family: inherit;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: all 0.3s;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    transition: all 0.2s;
   }
   
-  .tab-btn.active { transform: scale(1.05); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+  .tab-btn.active { color: white; border-color: transparent; transform: scale(1.05); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
   
   /* Active Tab Colors */
   .tab-btn[data-day="d1"].active { background: var(--c-d1); }
@@ -87,8 +80,28 @@
   .tab-btn[data-day="d5"].active { background: var(--c-d5); }
   .tab-btn[data-day="hotel"].active { background: var(--c-hotel); }
 
+  /* Banner */
+  .day-banner {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0));
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0));
+  }
+
+  .banner-text {
+      position: absolute;
+      top: 140px;
+      left: 20px;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  }
+  .banner-title { font-size: 2rem; font-weight: 800; margin: 0; }
+  .banner-date { font-size: 1rem; opacity: 0.9; font-weight: bold; }
+
   /* Content */
-  .container { padding: 10px 15px; max-width: 800px; margin: 0 auto; }
+  .container { padding: 0 15px 15px; max-width: 800px; margin: 0 auto; position: relative; top: -40px; }
   .tab-content { display: none; animation: fadeIn 0.4s ease; }
   .tab-content.active { display: block; }
 
@@ -96,14 +109,15 @@
 
   /* Weather Widget */
   .weather-box {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 15px 20px;
     margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: var(--shadow);
   }
   .weather-temp { font-size: 1.8rem; font-weight: bold; }
   .weather-scroll { display: flex; gap: 20px; overflow-x: auto; font-size: 0.85rem; padding-top: 5px;}
@@ -125,28 +139,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #333; /* Fallback */
   }
   
-  .card-body { padding: 25px 20px; }
+  .card-body { padding: 20px; }
   
-  .card-title { font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; color: var(--text-main); }
-  .card-sub { font-size: 0.95rem; color: var(--text-light); margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+  .card-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 5px; color: var(--text-main); display: flex; align-items: center; gap: 8px;}
+  .card-sub { font-size: 0.9rem; color: var(--text-light); margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
 
   /* Buttons */
   .btn-map {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 8px 16px;
     border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: white;
     background: #2d3436;
     margin-right: 10px;
     transition: transform 0.2s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
   .btn-map:active { transform: scale(0.95); }
 
@@ -157,7 +171,7 @@
     font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
-    padding: 12px 20px;
+    padding: 12px;
     border-radius: 12px;
     width: 100%;
     margin-top: 15px;
@@ -172,9 +186,9 @@
   /* Details Section */
   .details-box {
     display: none;
-    background: #fafafa;
+    background: #fff;
     border-radius: 15px;
-    padding: 20px;
+    padding: 10px;
     margin-top: 15px;
     border: 1px solid #eee;
   }
@@ -182,78 +196,52 @@
   .guide-text {
       font-size: 0.95rem;
       line-height: 1.8;
-      text-align: justify;
-      color: #444;
+      color: #555;
+      padding: 10px;
+      background: #f9f9f9;
+      border-radius: 10px;
       margin-bottom: 20px;
   }
 
-  /* Recommendation List & Japanese Tag */
-  .rec-list { list-style: none; padding: 0; margin: 0; }
-  .rec-item {
+  /* Menu List with Images */
+  .menu-list { list-style: none; padding: 0; margin: 0; }
+  
+  .menu-item {
+      display: flex;
+      gap: 15px;
       margin-bottom: 15px;
       padding-bottom: 15px;
-      border-bottom: 1px dashed #eee;
+      border-bottom: 1px solid #f0f0f0;
   }
-  .rec-item:last-child { border-bottom: none; }
-  
-  .rec-name { font-weight: bold; font-size: 1rem; color: #2d3436; margin-bottom: 5px; display: block; }
-  .rec-desc { font-size: 0.85rem; color: #636e72; line-height: 1.5; margin-bottom: 8px; }
+  .menu-item:last-child { border-bottom: none; margin-bottom: 0; }
 
-  .jp-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: #e1f0ff;
-      color: #0984e3;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      cursor: pointer;
-      border: 1px solid #74b9ff;
+  .menu-thumb {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #eee;
   }
-  .jp-tag:active { background: #74b9ff; color: white; }
 
-  /* Full Screen Japanese Modal */
-  #jp-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
-      z-index: 2000;
+  .menu-info {
+      display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-      animation: zoomIn 0.2s;
-  }
-  
-  @keyframes zoomIn { from {opacity: 0; transform: scale(0.9);} to {opacity: 1; transform: scale(1);} }
-
-  #jp-text-display {
-      color: white;
-      font-size: 3rem;
-      font-weight: bold;
-      margin-bottom: 20px;
-      line-height: 1.3;
-      word-break: keep-all;
-  }
-  
-  #jp-sub-display {
-      color: #aaa;
-      font-size: 1.2rem;
-      margin-bottom: 50px;
   }
 
-  .close-modal {
-      color: white;
-      border: 2px solid white;
-      background: transparent;
-      padding: 10px 30px;
+  .dish-name {
+      font-weight: 800;
       font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
+      color: #2d3436;
+      margin-bottom: 4px;
+      line-height: 1.3;
+  }
+  
+  .dish-desc {
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.4;
   }
 
   /* Utility Colors */
@@ -273,28 +261,20 @@
 </head>
 <body>
 
-<!-- Modal for Japanese Text -->
-<div id="jp-modal" onclick="closeModal()">
-    <div id="jp-text-display"></div>
-    <div id="jp-sub-display">給店員看此畫面即可下單</div>
-    <button class="close-modal">關閉 / Close</button>
-</div>
-
 <div class="header">
-  <h1>福岡美食導航 🥢</h1>
-  <p>12/16 - 12/20 • 深度味蕾之旅</p>
+  <h1>福岡多彩之旅 🌈</h1>
 </div>
 
 <div class="nav-scroll">
-  <button class="tab-btn active" data-day="d1" onclick="switchTab('d1')">Day 1</button>
-  <button class="tab-btn" data-day="d2" onclick="switchTab('d2')">Day 2</button>
-  <button class="tab-btn" data-day="d3" onclick="switchTab('d3')">Day 3</button>
-  <button class="tab-btn" data-day="d4" onclick="switchTab('d4')">Day 4</button>
-  <button class="tab-btn" data-day="d5" onclick="switchTab('d5')">Day 5</button>
-  <button class="tab-btn" data-day="hotel" onclick="switchTab('hotel')">🛏️ 住宿</button>
+  <button class="tab-btn active" data-day="d1" onclick="switchTab('d1')">Day 1 抵達</button>
+  <button class="tab-btn" data-day="d2" onclick="switchTab('d2')">Day 2 購物</button>
+  <button class="tab-btn" data-day="d3" onclick="switchTab('d3')">Day 3 溫泉</button>
+  <button class="tab-btn" data-day="d4" onclick="switchTab('d4')">Day 4 美食</button>
+  <button class="tab-btn" data-day="d5" onclick="switchTab('d5')">Day 5 返程</button>
+  <button class="tab-btn" data-day="hotel" onclick="switchTab('hotel')">住宿</button>
 </div>
 
-<div class="container" id="app">
+<div id="app">
     <!-- Content injected via JS -->
 </div>
 
@@ -302,227 +282,197 @@
     // 資料庫
     const schedule = {
         d1: {
-            title: "Day 1 (12/16)",
+            title: "Day 1",
+            date: "12/16 (一)",
+            banner: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80",
             color: "#FF6B6B",
             weather: { temp: "12°C", feels: "體感 10°C", hours: ["12:00 ⛅ 13°", "15:00 ☁️ 12°", "18:00 🌑 10°", "21:00 🌑 8°"] },
             items: [
                 { 
-                    time: "12:00", title: "抵達福岡機場", sub: "HKG -> FUK", 
-                    desc: "建議直接搭計程車至渡邊通飯店寄放行李，車程約20分鐘，費用約2000-2500日圓。", 
+                    time: "12:00", title: "✈️ 抵達福岡機場", sub: "HKG -> FUK", 
+                    desc: "建議直接搭計程車至渡邊通飯店寄放行李 🧳，車程約20分鐘，費用約2000-2500日圓。", 
                     map: "https://www.google.com/maps/search/?api=1&query=5-chome-15-3+Watanabedori+Fukuoka" 
                 },
                 { 
-                    time: "13:30", title: "水炊鍋 鳥善 (Torizen)", sub: "午餐 | 膠原蛋白雞湯",
+                    time: "13:30", title: "🍲 水炊鍋 鳥善 (Torizen)", sub: "午餐 | 膠原蛋白雞湯",
                     map: "https://www.google.com/maps/search/?api=1&query=Torizen+Daimyo+Fukuoka",
-                    text: "來到福岡，第一餐絕對要用「博多水炊鍋」來暖胃。鳥善創業於昭和年間，是大名區的高級老舖，但午餐時段價格相對親民。水炊鍋的靈魂在於那一鍋熬煮了數十小時、呈現乳白色的雞湯。店家選用九州產的「華味鳥」，肉質鮮嫩無腥味。這裡的吃法充滿儀式感：服務員會先舀一杯純湯，讓您加一點點鹽品嚐原味；接著品嚐燉煮軟嫩的帶骨雞肉，蘸上店家特製的橙醋醬（Ponzu），酸味能完美中和雞脂的油膩；最後放入蔬菜與雞肉丸。整餐吃下來清爽無負擔，但膠質滿滿。",
+                    text: "福岡必吃「博多水炊鍋」。鳥善的湯頭呈現乳白色，濃郁卻不油膩。吃法三部曲：1. 喝純湯加鹽 2. 吃雞肉沾橙醋 3. 煮雜炊粥。",
                     recs: [
-                        { name: "水炊鍋御膳", jp: "水炊き御膳", desc: "最經典的午間套餐，包含雞肉、蔬菜與雜炊。" },
-                        { name: "手工雞肉丸", jp: "自家製 つくね", desc: "鳥善的名物，口感彈牙，吸滿湯汁。" },
-                        { name: "日式炸雞塊", jp: "唐揚げ", desc: "薄皮多汁，九州風格的調味。" },
-                        { name: "雜炊粥", jp: "雑炊", desc: "最後用充滿精華的湯頭煮成的粥，必吃。" },
-                        { name: "生啤酒", jp: "生ビール", desc: "搭配熱騰騰火鍋的最佳飲料。" }
+                        { name: "水炊鍋御膳 (水炊き御膳)", img: "https://images.unsplash.com/photo-1606622363160-59a60f64dc64?auto=format&fit=crop&w=150&q=80", desc: "經典午間套餐，含雞肉與雜炊。" },
+                        { name: "手工雞肉丸 (自家製 つくね)", img: "https://images.unsplash.com/photo-1582269588220-4a816174d812?auto=format&fit=crop&w=150&q=80", desc: "口感Q彈，吸滿雞湯精華。" },
+                        { name: "日式炸雞塊 (唐揚げ)", img: "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=150&q=80", desc: "外酥內嫩的九州風味。" }
                     ]
                 },
                 { 
-                    time: "15:30", title: "I'm donut? 甜甜圈", sub: "下午茶 | 天神排隊名店",
+                    time: "15:30", title: "🍩 I'm donut? 甜甜圈", sub: "下午茶 | 天神排隊名店",
                     map: "https://www.google.com/maps/search/?api=1&query=I'm+donut+Tenjin",
-                    text: "這不是普通的甜甜圈，這是引發全日本排隊現象的「生甜甜圈」。I'm donut? 的麵團中加入了大量的南瓜泥，使得保水度極高，口感呈現出前所未有的「濕潤」與「入口即化」，就像在吃空氣感的麻糬一樣。天神店的裝潢非常時髦，從遠處就能看到排隊人潮。雖然需要排隊，但當你咬下第一口，那種蓬鬆柔軟的口感會讓你覺得一切都值得。除了甜口味，鹹口味也非常出色，適合當作下午茶點心。",
+                    text: "爆紅的「生甜甜圈」，麵團加入南瓜，口感如空氣般濕潤軟糯。排隊也值得！",
                     recs: [
-                        { name: "原味 I'm donut?", jp: "I'm donut? (プレーン)", desc: "最能吃出麵團本身如雲朵般口感的經典款。" },
-                        { name: "開心果", jp: "ピスタチオ", desc: "濃郁的堅果奶霜內餡，人氣No.1。" },
-                        { name: "生火腿", jp: "プロシュート", desc: "甜甜圈配上鹹香生火腿，意外絕配。" },
-                        { name: "巧克力", jp: "カカオ", desc: "苦甜適中的巧克力麵團。" },
-                        { name: "卡士達", jp: "カスタード", desc: "經典的爆漿口感，香草味濃郁。" }
+                        { name: "原味 I'm donut? (プレーン)", img: "https://images.unsplash.com/photo-1626017260563-356c914e6e66?auto=format&fit=crop&w=150&q=80", desc: "感受麵團原味的感動。" },
+                        { name: "開心果 (ピスタチオ)", img: "https://images.unsplash.com/photo-1551024601-564d6d0430f9?auto=format&fit=crop&w=150&q=80", desc: "濃郁堅果奶霜，人氣No.1。" },
+                        { name: "生火腿 (プロシュート)", img: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=150&q=80", desc: "鹹甜交織的絕妙滋味。" }
                     ]
                 },
-                { time: "16:30", title: "天神商場巡禮", sub: "購物 | 岩田屋 / 三越", desc: "逛逛天神最熱鬧的百貨區，推薦去岩田屋買獺祭面膜或精品。", map: "https://www.google.com/maps/search/?api=1&query=Iwataya+Fukuoka" },
+                { time: "16:30", title: "🛍️ 天神商場巡禮", sub: "岩田屋 / 三越", desc: "逛逛天神百貨區，推薦岩田屋買獺祭面膜或精品。💄", map: "https://www.google.com/maps/search/?api=1&query=Iwataya+Fukuoka" },
                 { 
-                    time: "19:00", title: "Number Shot", sub: "晚餐 | 創意居酒屋",
+                    time: "19:00", title: "🍺 Number Shot", sub: "晚餐 | 創意居酒屋",
                     map: "https://www.google.com/maps/search/?api=1&query=Number+Shot+Daimyo+Fukuoka",
-                    text: "位於大名區的時髦居酒屋，是當地年輕人與老饕的聚集地。這裡打破傳統居酒屋擁擠吵雜的印象，環境現代且開放。料理以「福岡產地直送」為核心，將九州的在地食材轉化為精緻的創意菜。必點的「胡麻鯖魚」沒有一絲腥味，搭配濃郁的胡麻醬非常下酒。這裡的菜色份量適中，非常適合想多嘗試幾種不同口味的旅客。建議可以點一杯福岡當地的清酒或精釀啤酒，享受福岡的夜生活。",
+                    text: "時髦的大名居酒屋，將九州在地食材做成精緻創意料理。氣氛輕鬆熱鬧。",
                     recs: [
-                        { name: "胡麻鯖魚", jp: "ゴマサバ", desc: "福岡博多名物，新鮮生鯖魚拌特製胡麻醬。" },
-                        { name: "鰻魚馬鈴薯沙拉", jp: "鰻のポテトサラダ", desc: "奢華鰻魚與馬鈴薯沙拉的創意結合。" },
-                        { name: "和牛塔塔", jp: "和牛のタルタル", desc: "生牛肉拌蛋黃，口感滑順鮮甜。" },
-                        { name: "雲仙火腿炸排", jp: "雲仙ハムカツ", desc: "九州特產火腿，厚切酥炸。" },
-                        { name: "季節釜飯", jp: "季節の釜飯", desc: "現點現炊，香氣撲鼻的收尾主食。" }
+                        { name: "胡麻鯖魚 (ゴマサバ)", img: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?auto=format&fit=crop&w=150&q=80", desc: "福岡名物，無腥味超下酒。" },
+                        { name: "鰻魚馬鈴薯沙拉 (鰻のポテトサラダ)", img: "https://images.unsplash.com/photo-1518133346387-5735b54659b5?auto=format&fit=crop&w=150&q=80", desc: "奢華與平民美食的結合。" }
                     ]
                 }
             ]
         },
         d2: {
-            title: "Day 2 (12/17)",
+            title: "Day 2",
+            date: "12/17 (二)",
+            banner: "https://images.unsplash.com/photo-1512413914633-b5043f4041ea?auto=format&fit=crop&w=800&q=80",
             color: "#4ECDC4",
             weather: { temp: "10°C", feels: "體感 8°C", hours: ["09:00 ☀️ 8°", "12:00 ☀️ 11°", "15:00 ⛅ 10°", "18:00 ✨ 9°"] },
             items: [
                 { 
-                    time: "10:00", title: "Full Full 天神麵包", sub: "早餐 | 必吃明太子法包",
+                    time: "10:00", title: "🥖 Full Full 天神麵包", sub: "早餐 | 必吃明太子法包",
                     map: "https://www.google.com/maps/search/?api=1&query=Full+Full+Tenjin+Fukuoka",
-                    text: "如果只能推薦一家福岡麵包店，絕對是 Full Full。這裡的「明太子法國麵包」是福岡早餐的黃金標準。店家使用福岡名產明太子與高品質國產奶油調製成獨家抹醬，毫不手軟地夾在法國麵包中。不同於一般硬邦邦的法棍，這裡的外皮烤得酥脆，內部卻保持著驚人的濕潤與彈性。咬下去的瞬間，麥香與明太子的鹹香在口中爆發。建議買完後直接在附近的公園享用，熱度是美味的關鍵。",
+                    text: "福岡早餐首選！明太子法國麵包外酥內軟，夾滿福岡特產明太子醬。🥖",
                     recs: [
-                        { name: "明太子法國麵包", jp: "明太フランス", desc: "鎮店之寶，請一人買一條，太好吃。" },
-                        { name: "大蒜法國麵包", jp: "ガーリックフランス", desc: "蒜香濃郁，也是熱銷款。" },
-                        { name: "炸豬排三明治", jp: "カツサンド", desc: "厚切豬排，早餐想吃肉的首選。" },
-                        { name: "栗子麵包", jp: "栗パン", desc: "季節限定或常駐的日式甜麵包。" },
-                        { name: "熱咖啡", jp: "ホットコーヒー", desc: "解膩的最佳拍檔。" }
+                        { name: "明太子法國麵包 (明太フランス)", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=150&q=80", desc: "鎮店之寶，請一人一條。" },
+                        { name: "大蒜法國麵包 (ガーリックフランス)", img: "https://images.unsplash.com/photo-1573140247632-f84660f67126?auto=format&fit=crop&w=150&q=80", desc: "蒜香濃郁，熱熱吃最好。" }
                     ]
                 },
                 { 
-                    time: "12:30", title: "WAN STEAK HOUSE", sub: "午餐 | 高空景觀鐵板燒",
+                    time: "12:30", title: "🥩 WAN STEAK HOUSE", sub: "午餐 | 高空景觀鐵板燒",
                     map: "https://www.google.com/maps/search/?api=1&query=ONE+FUKUOKA+BLDG+Tenjin",
-                    text: "位於天神最新地標 ONE FUKUOKA BLDG 的 19 樓，這家餐廳擁有極佳的視野，可以俯瞰天神街景。WAN STEAK HOUSE 主打鐵板料理，在明亮現代的空間中，享受廚師在鐵板上滋滋作響的烹調過程。這裡的牛肉選用九州產或進口優質牛肉，肉質軟嫩多汁。特別推薦他們的漢堡排，刀子切開時肉汁會像瀑布一樣流出來，搭配特製的洋蔥醬汁非常下飯。午餐時段CP值很高，是逛街中途休憩的好地方。",
+                    text: "位於 ONE FUKUOKA BLDG 19F，俯瞰天神美景。鐵板漢堡排肉汁爆炸！",
                     recs: [
-                        { name: "午間牛排套餐", jp: "ランチステーキセット", desc: "附沙拉、湯與白飯，CP值高。" },
-                        { name: "鐵板漢堡排", jp: "鉄板ハンバーグ", desc: "肉汁爆炸，口感紮實。" },
-                        { name: "蒜香炒飯", jp: "ガーリックライス", desc: "鐵板快炒，粒粒分明香氣足。" },
-                        { name: "鐵板烤蔬菜", jp: "焼き野菜", desc: "鎖住蔬菜甜味。" },
-                        { name: "紅酒 (單杯)", jp: "グラスワイン (赤)", desc: "搭配牛肉的經典選擇。" }
+                        { name: "午間牛排套餐 (ランチステーキ)", img: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=150&q=80", desc: "CP值高，肉質軟嫩。" },
+                        { name: "鐵板漢堡排 (ハンバーグ)", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=150&q=80", desc: "切開會有肉汁瀑布。" }
                     ]
                 },
-                { time: "14:30", title: "天神購物 & 下午茶", sub: "Parco / Cafe del SOL", desc: "在地下街與 Parco 購物。下午茶推薦 Cafe del SOL 的蓬鬆鬆餅，或是 FUK Coffee 的飛機主題咖啡。", map: "https://www.google.com/maps/search/?api=1&query=Cafe+del+SOL+Fukuoka" },
+                { time: "14:30", title: "🛍️ 天神地下街 & 下午茶", sub: "Parco / Cafe del SOL", desc: "推薦 Cafe del SOL 的蓬鬆鬆餅🥞，或是 FUK Coffee☕。", map: "https://www.google.com/maps/search/?api=1&query=Cafe+del+SOL+Fukuoka" },
                 { 
-                    time: "18:00", title: "博多聖誕市集", sub: "景點 | 博多站前廣場",
+                    time: "18:00", title: "🎄 博多聖誕市集", sub: "景點 | 燈海與熱紅酒",
                     map: "https://www.google.com/maps/search/?api=1&query=Hakata+Station+Christmas+Market",
-                    text: "福岡冬天的重頭戲！博多站前廣場會變身為歐洲童話小鎮，數十萬顆 LED 燈將夜空照得璀璨奪目。空氣中飄散著肉桂、香料與烤香腸的香氣。一定要去買一杯「熱紅酒」，通常會附贈當年度限定設計的馬克杯，喝完杯子可以帶回家當紀念品。市集裡還有販售來自歐洲的聖誕雜貨。建議走上博多站二樓的戶外露台，從高處往下拍，可以拍到整片燈海與聖誕樹的壯觀全景。",
+                    text: "博多站前廣場變身歐洲童話小鎮！必喝熱紅酒，收藏限定馬克杯。🍷✨",
                     recs: [
-                        { name: "熱紅酒 (附杯子)", jp: "グリューワイン (マグカップ付)", desc: "必買！杯子可帶回家紀念。" },
-                        { name: "歐式螺旋香腸", jp: "ぐるぐるソーセージ", desc: "外皮脆彈，配酒絕佳。" },
-                        { name: "熱可可", jp: "ホットチョコレート", desc: "不喝酒的選擇，上面有棉花糖。" },
-                        { name: "吉拿棒", jp: "チュロス", desc: "現炸酥脆的甜點。" },
-                        { name: "聖誕雜貨", jp: "クリスマス雑貨", desc: "挑選精緻的木製擺飾。" }
+                        { name: "熱紅酒 (グリューワイン)", img: "https://images.unsplash.com/photo-1512389142860-9c449e58a543?auto=format&fit=crop&w=150&q=80", desc: "附贈限定馬克杯。" },
+                        { name: "歐式香腸 (ソーセージ)", img: "https://images.unsplash.com/photo-1595982008501-46d4429fa2a0?auto=format&fit=crop&w=150&q=80", desc: "脆彈多汁，配酒絕佳。" }
                     ]
                 },
                 { 
-                    time: "19:30", title: "燒鳥 武蔵 (Musashi)", sub: "晚餐 | 老字號燒鳥",
+                    time: "19:30", title: "🍢 燒鳥 武蔵 (Musashi)", sub: "晚餐 | 老字號燒鳥",
                     map: "https://www.google.com/maps/search/?api=1&query=Yakitori+Musashi+Hakata+Station+Sunlife+Hotel",
-                    text: "位於博多站筑紫口 Sunlife Hotel 一樓的老字號燒鳥店，創業超過半世紀。這裡保留了昭和時代的熱鬧氛圍，一進店就能聽到店員充滿元氣的招呼聲。福岡的燒鳥特色是會在盤子上先放生高麗菜，淋上醋醬，搭配串燒吃非常解膩。這裡的「雞皮」是必點，經過多次翻烤去除多餘油脂，口感Q彈入味。另外「豬五花」也是博多燒鳥的經典，肥瘦相間，炭火香氣十足。",
+                    text: "博多站筑紫口老鋪。氣氛熱鬧，必點雞皮與豬五花串燒。",
                     recs: [
-                        { name: "豬五花", jp: "豚バラ", desc: "博多燒鳥的代表，油脂豐富。" },
-                        { name: "雞皮", jp: "とりかわ", desc: "口感Q彈，醬汁入味。" },
-                        { name: "雞肉丸", jp: "つくね", desc: "軟嫩多汁，老少咸宜。" },
-                        { name: "烤香菇", jp: "しいたけ", desc: "炭烤後保留水分，非常鮮甜。" },
-                        { name: "生啤酒 (中)", jp: "生ビール (中)", desc: "吃串燒就是要大口喝酒。" }
+                        { name: "豬五花 (豚バラ)", img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=150&q=80", desc: "博多燒鳥經典，油脂豐富。" },
+                        { name: "雞皮 (とりかわ)", img: "https://images.unsplash.com/photo-1519690889869-e705e59f72e1?auto=format&fit=crop&w=150&q=80", desc: "多次翻烤，口感Q彈。" }
                     ]
                 }
             ]
         },
         d3: {
-            title: "Day 3 (12/18)",
+            title: "Day 3",
+            date: "12/18 (三)",
+            banner: "https://images.unsplash.com/photo-1463693396721-8ca0cfa2b3b5?auto=format&fit=crop&w=800&q=80",
             color: "#45B7D1",
             weather: { temp: "5°C", feels: "體感 2°C", hours: ["09:00 ☁️ 4°", "12:00 ⛅ 6°", "15:00 ☁️ 5°", "18:00 🌫️ 3°"] },
             items: [
-                { time: "09:30", title: "行李任務 & 移動", sub: "前往博多", map: "https://www.google.com/maps/search/?api=1&query=Hotel+Nikko+Fukuoka", desc: "搭計程車將大型行李寄放在『福岡日航飯店』(Day 4 住宿)，僅帶著過夜輕便包前往博多站搭車。" },
+                { time: "09:30", title: "🚕 行李任務 & 移動", sub: "前往博多", map: "https://www.google.com/maps/search/?api=1&query=Hotel+Nikko+Fukuoka", desc: "搭計程車將大行李寄放『福岡日航飯店』，輕裝去由布院。" },
                 { 
-                    time: "12:00", title: "由布院之森", sub: "交通 | 九州最美列車",
+                    time: "12:00", title: "🚂 由布院之森", sub: "交通 | 森林觀光列車",
                     map: "",
-                    text: "這不只是一輛火車，而是一座移動的森林別墅。由設計師水戶岡銳治操刀，深綠色的復古車身配上車內大量的原木裝潢，營造出溫暖奢華的氛圍。車廂地板刻意挑高（High Decker），讓乘客能以更好的視野欣賞沿途風景。車上有專屬乘務員提供拍照服務。最重要的是，一上車請立刻前往餐車（Buffet），搶購限量的 B-Speak 蛋糕卷與便當，晚了通常就買不到了。",
+                    text: "九州最美復古列車。上車請立刻衝去餐車搶購 B-Speak 蛋糕卷！🍰",
                     recs: [
-                        { name: "B-Speak 蛋糕卷", jp: "Pロール (カット)", desc: "車上限定切片裝，極度熱門。" },
-                        { name: "由布院之森便當", jp: "ゆふいんの森弁当", desc: "圓形便當，使用九州在地食材。" },
-                        { name: "大豆冰淇淋", jp: "大豆アイス", desc: "口感濃郁卻清爽的特色甜點。" },
-                        { name: "臭橙果汁", jp: "カボスジュース", desc: "大分縣特產柑橘，酸甜好喝。" },
-                        { name: "紀念拍照", jp: "記念撮影", desc: "請乘務員幫忙拿紀念牌拍照。" }
+                        { name: "B-Speak 蛋糕卷 (Pロール)", img: "https://images.unsplash.com/photo-1519340333755-56e9c1d04579?auto=format&fit=crop&w=150&q=80", desc: "車上限定切片裝。" },
+                        { name: "由布院之森便當 (お弁当)", img: "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=150&q=80", desc: "精緻圓形便當。" }
                     ]
                 },
-                { time: "14:30", title: "由布院散策", sub: "湯之坪 / 金鱗湖", desc: "漫步湯之坪街道，必吃金賞可樂餅、Milch 起司塔。走到金鱗湖欣賞夢幻景色。", map: "https://www.google.com/maps/search/?api=1&query=Kinrin+Lake+Yufuin" },
+                { time: "14:30", title: "📷 由布院散策", sub: "湯之坪 / 金鱗湖", desc: "漫步童話街道。必吃金賞可樂餅、Milch 起司塔。走到金鱗湖看霧氣。", map: "https://www.google.com/maps/search/?api=1&query=Kinrin+Lake+Yufuin" },
                 { 
-                    time: "18:00", title: "由布之癒 友里", sub: "住宿 | 隱密溫泉宿",
+                    time: "18:00", title: "♨️ 由布之癒 友里", sub: "住宿 | 隱密溫泉宿",
                     map: "https://www.google.com/maps/search/?api=1&query=Yufunoyuri+Yufuin",
-                    text: "今晚入住的「友里」是一間全客室皆附設露天風呂的奢華旅館。這裡遠離了車站的喧囂，提供極致的隱私與寧靜。晚餐通常是精緻的創作懷石料理，主角是大分縣引以為傲的「豐後牛」與在地野菜。您可以在房間內一邊泡著溫泉，一邊看著由布岳的星空，享受完全放鬆的時光。這裡的服務非常細膩，是體驗日本「おもてなし（款待）」文化的最佳場所。",
+                    text: "全客室附設露天風呂。晚餐享受大分縣豐後牛與精緻懷石料理。",
                     recs: [
-                        { name: "豐後牛料理", jp: "豊後牛", desc: "大分縣頂級和牛，油脂甘甜。" },
-                        { name: "地雞火鍋", jp: "地鶏鍋", desc: "使用在地土雞熬製的濃郁湯頭。" },
-                        { name: "懷石料理", jp: "懐石料理", desc: "依季節變換的精緻套餐。" },
-                        { name: "在地清酒", jp: "地酒", desc: "推薦嘗試大分的麥燒酒或清酒。" },
-                        { name: "晨間溫泉", jp: "朝風呂", desc: "早起再泡一次，空氣最新鮮。" }
+                        { name: "豐後牛料理 (豊後牛)", img: "https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?auto=format&fit=crop&w=150&q=80", desc: "油脂甘甜的頂級和牛。" },
+                        { name: "地雞火鍋 (地鶏鍋)", img: "https://images.unsplash.com/photo-1544979590-1925b4266158?auto=format&fit=crop&w=150&q=80", desc: "濃郁暖胃的湯頭。" }
                     ]
                 }
             ]
         },
         d4: {
-            title: "Day 4 (12/19)",
+            title: "Day 4",
+            date: "12/19 (四)",
+            banner: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
             color: "#FF9F43",
             weather: { temp: "8°C", feels: "體感 6°C", hours: ["12:00 🌧️ 9°", "15:00 ☁️ 8°", "18:00 ☁️ 7°", "21:00 ✨ 6°"] },
             items: [
-                { time: "12:00", title: "返回博多", sub: "交通", desc: "搭乘 JR 或巴士返回博多，約 14:15 抵達。", map: "" },
-                { time: "15:00", title: "福岡日航飯店 Check-in", sub: "住宿", desc: "回到飯店領取寄放的行李，進房休息並整理儀容，準備迎接晚上的雙大餐。", map: "https://www.google.com/maps/search/?api=1&query=Hotel+Nikko+Fukuoka" },
+                { time: "12:00", title: "🚌 返回博多", sub: "交通", desc: "返回博多，前往日航飯店 Check-in。", map: "https://www.google.com/maps/search/?api=1&query=Hotel+Nikko+Fukuoka" },
                 { 
-                    time: "16:00", title: "Musashiza (むさし坐)", sub: "早晚餐 | 爐端燒體驗",
+                    time: "16:00", title: "🔥 Musashiza (むさし坐)", sub: "早晚餐 | 爐端燒體驗",
                     map: "https://www.google.com/maps/search/?api=1&query=5-chome-5-12+Watanabedori+Fukuoka",
-                    text: "位於渡邊通的質感爐端燒，下午四點就開門，非常適合當作今晚的第一輪。這家店最大的特色是「板前體驗」：新鮮的魚獲、蔬菜陳列在吧檯前，師傅在炭火上現烤，完成後會用一支長長的木製船槳（堀返貝）將料理遞送到您的面前！這種互動感非常有趣。推薦必點「炭烤大香菇」與「一夜干」，炭火的高溫鎖住了食材的水分，簡單沾鹽就超級美味。",
+                    text: "用船槳遞食物的有趣爐端燒！食材在眼前炭火現烤，香氣逼人。",
                     recs: [
-                        { name: "炭烤大香菇", jp: "どんこ椎茸", desc: "肉厚多汁，咬下去充滿炭香。" },
-                        { name: "一夜干烤魚", jp: "魚の干物", desc: "皮脆肉嫩，下酒神器。" },
-                        { name: "牛橫膈膜", jp: "牛ハラミ", desc: "口感軟嫩，帶有肉汁。" },
-                        { name: "烤飯糰", jp: "焼きおにぎり", desc: "表面刷醬油烤至焦脆。" },
-                        { name: "日本酒 (一合)", jp: "日本酒 (一合)", desc: "店員推薦的福岡地酒。" }
+                        { name: "炭烤大香菇 (どんこ椎茸)", img: "https://images.unsplash.com/photo-1625944525533-472a2438b6f4?auto=format&fit=crop&w=150&q=80", desc: "肉厚多汁，充滿炭香。" },
+                        { name: "一夜干烤魚 (魚の干物)", img: "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?auto=format&fit=crop&w=150&q=80", desc: "皮脆肉嫩，下酒神器。" }
                     ]
                 },
-                { time: "18:00", title: "中洲散步", sub: "休息", desc: "沿著那珂川散步消化，欣賞中洲的霓虹夜景與屋台風景，為下一餐做準備。", map: "" },
+                { time: "18:00", title: "🚶 中洲散步", sub: "休息", desc: "沿著那珂川散步，欣賞霓虹夜景與屋台。", map: "" },
                 { 
-                    time: "20:30", title: "燒肉處 石原牛", sub: "晚餐 | 頂級和牛饗宴",
+                    time: "20:30", title: "🥩 燒肉處 石原牛", sub: "晚餐 | 頂級和牛",
                     map: "https://www.google.com/maps/search/?api=1&query=Hakata+Riverain+Ishiharagyu",
-                    text: "旅程的壓軸大餐，獻給肉食主義者！石原牛位於博多 Riverain，環境優雅安靜，適合慢慢品嚐。這裡專門提供高品質的鹿兒島產黑毛和牛——石原牛。其特徵是如大理石般美麗的霜降油花，油脂熔點低，放入口中彷彿會融化一般，散發出獨特的和牛甜味。建議點綜合拼盤或特上牛五花，搭配店家的特製醬汁與白飯，是極致的享受。如果怕膩，這裡的冷麵也非常清爽解膩。",
+                    text: "鹿兒島產黑毛和牛專門店。霜降油花入口即化，旅程的奢華壓軸。",
                     recs: [
-                        { name: "特上牛五花", jp: "特上カルビ", desc: "油脂最豐富，入口即化。" },
-                        { name: "厚切牛舌", jp: "厚切りタン", desc: "口感爽脆，搭配檸檬汁。" },
-                        { name: "赤身腿肉", jp: "赤身肉", desc: "肉味濃郁，較不油膩。" },
-                        { name: "石鍋拌飯", jp: "石焼ビビンバ", desc: "熱騰騰鍋巴飯，飽足感滿分。" },
-                        { name: "盛岡冷麵", jp: "盛岡冷麺", desc: "麵條Q彈，湯頭微酸解膩。" }
+                        { name: "特上牛五花 (特上カルビ)", img: "https://images.unsplash.com/photo-1615937722923-67f6deaf2cc9?auto=format&fit=crop&w=150&q=80", desc: "油脂爆發的美味。" },
+                        { name: "厚切牛舌 (厚切りタン)", img: "https://images.unsplash.com/photo-1619864230835-716499691901?auto=format&fit=crop&w=150&q=80", desc: "爽脆口感，配檸檬汁。" }
                     ]
                 }
             ]
         },
         d5: {
-            title: "Day 5 (12/20)",
+            title: "Day 5",
+            date: "12/20 (五)",
+            banner: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80",
             color: "#A55EEA",
             weather: { temp: "11°C", feels: "體感 10°C", hours: ["09:00 ☀️ 9°", "12:00 ☀️ 11°", "15:00 ✈️ 10°"] },
             items: [
-                { time: "11:00", title: "Check-out", sub: "博多", desc: "辦理退房，將行李寄放在飯店櫃台。", map: "" },
+                { time: "11:00", title: "👋 Check-out", sub: "博多", desc: "退房，行李寄放櫃台。", map: "" },
                 { 
-                    time: "12:00", title: "博多海鮮 Uoden (うお田)", sub: "午餐 | 豪華海鮮丼",
+                    time: "12:00", title: "🍚 博多海鮮 Uoden (うお田)", sub: "午餐 | 豪華海鮮丼",
                     map: "https://www.google.com/maps/search/?api=1&query=Uoden+Hakata",
-                    text: "離開福岡前的最後一擊！這家店位於三井花園飯店一樓，距離日航飯店走路僅需5分鐘。這裡最出名的是視覺衝擊滿點的「豪華明太子鮭魚卵丼」。整條福岡特產的明太子豪邁地橫躺在鋪滿鮭魚卵的白飯上，金黃與鮮紅交織。每一口都能吃到鮭魚卵在口中爆開的鮮味，搭配微辣的明太子與香Q的日本米飯，雖然膽固醇爆表，但絕對值得。如果不吃生食，他們的炸魚或鰻魚飯也很有名。",
+                    text: "視覺衝擊！整條明太子躺在鮭魚卵上，痛風也甘願的美味。",
                     recs: [
-                        { name: "明太子鮭魚卵丼", jp: "明太いくら玉子焼丼", desc: "必點招牌，拍照超美。" },
-                        { name: "鯛魚茶泡飯", jp: "鯛茶漬け", desc: "清爽高雅，福岡著名鄉土料理。" },
-                        { name: "海鮮天婦羅", jp: "海鮮天ぷら", desc: "麵衣酥脆，食材新鮮。" },
-                        { name: "福岡甜醬油", jp: "九州醤油", desc: "淋在丼飯上風味更佳。" },
-                        { name: "自家製布丁", jp: "自家製プリン", desc: "完美的飯後甜點。" }
+                        { name: "明太子鮭魚卵丼 (明太いくら丼)", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=150&q=80", desc: "必點招牌，拍照超美。" },
+                        { name: "鯛魚茶泡飯 (鯛茶漬け)", img: "https://images.unsplash.com/photo-1629805908253-333f2a833589?auto=format&fit=crop&w=150&q=80", desc: "清爽高雅的福岡鄉土料理。" }
                     ]
                 },
-                { time: "15:30", title: "前往機場", sub: "FUK", desc: "回飯店領行李，搭乘計程車前往福岡機場國際線（約15-20分鐘）。", map: "" }
+                { time: "15:30", title: "✈️ 前往機場", sub: "FUK", desc: "搭計程車前往福岡機場國際線，準備回家。", map: "" }
             ]
         },
         hotel: {
             title: "住宿資訊",
+            date: "HOTEL INFO",
+            banner: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80",
             color: "#20bf6b",
             weather: null,
             items: [
                 { 
-                    time: "Day 1-2", title: "天神/渡邊通 住宿", sub: "渡邊通 5丁目",
+                    time: "Day 1-2", title: "🏨 天神/渡邊通 住宿", sub: "Hotel Monte Hermana Fukuoka",
                     map: "https://www.google.com/maps/search/?api=1&query=5-chome-15-3+Watanabedori+Chuo+Ward+Fukuoka",
-                    text: "地址：福岡市中央區渡邊通5丁目15-3\n(對應飯店：Hotel Monte Hermana Fukuoka 或周邊)\n位於福岡最繁華的區域，走路可到天神百貨區，附近超商與餐廳林立。第一天從機場搭計程車時，請直接出示此地址。",
-                    recs: [
-                        { name: "查看Google地圖", jp: "地図を見る", desc: "點擊上方導航按鈕" },
-                        { name: "走路去 I'm donut?", jp: "徒歩圏内", desc: "約 5-8 分鐘" },
-                        { name: "最近的地鐵站", jp: "天神南駅", desc: "步行約 3 分鐘" }
-                    ]
-                },
-                { 
-                    time: "Day 3", title: "由布院溫泉 由布之癒 友里", sub: "由布院",
-                    map: "https://www.google.com/maps/search/?api=1&query=Yufunoyuri+Yufuin",
-                    text: "全客室露天風呂付。享受完全的隱私與寧靜。",
+                    text: "地址：福岡市中央區渡邊通5丁目15-3\n位於最繁華區域，走路可到天神百貨、屋台。",
                     recs: []
                 },
                 { 
-                    time: "Day 4", title: "福岡日航飯店", sub: "博多站前",
+                    time: "Day 3", title: "♨️ 由布之癒 友里", sub: "由布院",
+                    map: "https://www.google.com/maps/search/?api=1&query=Yufunoyuri+Yufuin",
+                    text: "全客室露天風呂付。享受隱私與寧靜。",
+                    recs: []
+                },
+                { 
+                    time: "Day 4", title: "🏨 福岡日航飯店", sub: "博多站前",
                     map: "https://www.google.com/maps/search/?api=1&query=Hotel+Nikko+Fukuoka",
-                    text: "位置：博多站正對面，有地下通道直結。\nDay 3 早上先來這裡寄放行李。Day 4 下午回來 Check-in。",
-                    recs: [
-                        { name: "行李寄放", jp: "荷物預かり", desc: "服務櫃台" },
-                        { name: "地下通道", jp: "地下通路", desc: "P5 出口直結" }
-                    ]
+                    text: "位置：博多站正對面，地下道直結。Day 3 先來寄放行李。",
+                    recs: []
                 }
             ]
         }
@@ -544,9 +494,8 @@
             weatherHtml = `
                 <div class="weather-box">
                     <div>
-                        <div style="font-size:0.9rem; color:#888;">${data.title}</div>
                         <div class="weather-temp" style="color:${data.color}">${data.weather.temp}</div>
-                        <div style="font-size:0.8rem;">${data.weather.feels}</div>
+                        <div style="font-size:0.8rem; color:#666;">${data.weather.feels}</div>
                     </div>
                     <div class="weather-scroll">
                         ${data.weather.hours.map(h => {
@@ -558,22 +507,33 @@
             `;
         }
 
+        // Render Banner
+        const bannerHtml = `
+            <div style="position:relative; margin-bottom:20px;">
+                <img src="${data.banner}" class="day-banner" alt="Banner">
+                <div class="banner-text">
+                    <h2 class="banner-title">${data.title}</h2>
+                    <div class="banner-date">${data.date}</div>
+                </div>
+            </div>
+        `;
+
         let itemsHtml = data.items.map(item => {
             let recsHtml = '';
             if (item.recs && item.recs.length > 0) {
                 recsHtml = `
                     <div style="margin-top:20px;">
-                        <div style="font-weight:bold; color:var(--text-main); margin-bottom:10px; border-left:4px solid ${data.color}; padding-left:10px;">
-                            必吃推薦 & 點餐幫手
+                        <div style="font-weight:bold; color:#444; margin-bottom:10px; font-size:0.9rem;">
+                            👇 必吃推薦 / Recommended
                         </div>
-                        <ul class="rec-list">
+                        <ul class="menu-list">
                             ${item.recs.map(r => `
-                                <li class="rec-item">
-                                    <span class="rec-name">${r.name}</span>
-                                    <div class="rec-desc">${r.desc}</div>
-                                    <button class="jp-tag" onclick="showBigText('${r.jp}', '${r.name}')">
-                                        <i class="fas fa-search-plus"></i> ${r.jp}
-                                    </button>
+                                <li class="menu-item">
+                                    <img src="${r.img}" class="menu-thumb" alt="${r.name}">
+                                    <div class="menu-info">
+                                        <div class="dish-name">${r.name}</div>
+                                        <div class="dish-desc">${r.desc}</div>
+                                    </div>
                                 </li>
                             `).join('')}
                         </ul>
@@ -585,7 +545,7 @@
             if (item.text || recsHtml) {
                 detailsBtn = `
                     <button class="toggle-btn" onclick="toggleDetails(this)">
-                        <i class="fas fa-book-open"></i> 查看介紹與點餐
+                        <i class="fas fa-book-open"></i> 查看介紹與菜單
                     </button>
                     <div class="details-box">
                         ${item.text ? `<div class="guide-text">${item.text}</div>` : ''}
@@ -595,17 +555,16 @@
             }
 
             return `
-                <div class="card" id="${dayId}">
-                    <div class="card-top">
+                <div class="card">
+                    <div class="card-top" style="background:${data.color}">
                         <div style="font-weight:bold; font-size:1.1rem;">${item.time}</div>
-                        <div><i class="fas fa-map-marker-alt"></i></div>
                     </div>
                     <div class="card-body">
                         <div class="card-title">${item.title}</div>
                         <div class="card-sub">
                             ${item.sub}
                         </div>
-                        <div style="font-size:0.95rem; color:#555; margin-bottom:15px; line-height:1.5;">
+                        <div style="font-size:0.95rem; color:#555; margin-bottom:10px; line-height:1.5;">
                             ${item.desc || ''}
                         </div>
                         
@@ -617,35 +576,20 @@
             `;
         }).join('');
 
-        container.innerHTML = weatherHtml + itemsHtml;
+        container.innerHTML = bannerHtml + `<div class="container">` + weatherHtml + itemsHtml + `</div>`;
     }
 
     function toggleDetails(btn) {
         const box = btn.nextElementSibling;
         if (box.style.display === 'block') {
             box.style.display = 'none';
-            btn.innerHTML = '<i class="fas fa-book-open"></i> 查看介紹與點餐';
+            btn.innerHTML = '<i class="fas fa-book-open"></i> 查看介紹與菜單';
             btn.style.background = '#f1f2f6';
         } else {
             box.style.display = 'block';
             btn.innerHTML = '<i class="fas fa-chevron-up"></i> 收起';
             btn.style.background = '#dfe4ea';
         }
-    }
-
-    // Modal Functions
-    const modal = document.getElementById('jp-modal');
-    const modalText = document.getElementById('jp-text-display');
-    const modalSub = document.getElementById('jp-sub-display');
-
-    function showBigText(jp, sub) {
-        modalText.innerText = jp;
-        modalSub.innerText = sub || "給店員看此畫面即可下單";
-        modal.style.display = 'flex';
-    }
-
-    function closeModal() {
-        modal.style.display = 'none';
     }
 
     // Init
